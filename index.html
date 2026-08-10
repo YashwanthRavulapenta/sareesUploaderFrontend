@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>products</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .main_div{
+            display: flex;
+            flex-direction: column;
+            row-gap: 10px;
+            font-family: sans-serif;
+        }
+        .send_button{
+            font-size: 16px;
+            border: 1px solid gray;
+            border-radius: 5px;
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+        .send_button:active{
+            font-size: 17px;
+            background-color: blue;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="main_div">
+        <div>
+            <label for="">Image : </label>
+            <input type="file" name="" id="imageFeild">
+        </div>
+        <div>
+            <label for="">Category : </label>
+            <select name="" id="categoryFeild">
+                <option value="Cotton Sarees">Cotton Sarees</option>
+                <option value="Chiffon Saree">Chiffon Saree</option>
+                <option value="Silk Sarees">Silk Sarees</option>
+                <option value="Georgette Saree">Georgette Saree</option>
+                <option value="Kanjivaram Saree">Kanjivaram Saree</option>
+            </select>
+        </div>
+        <div>
+            <label for="">Name : </label>
+            <input type="text" id="sareeName">
+        </div>
+        <div>
+            <label>Color : </label>
+            <input type="text" id="sareeColor">
+        </div>
+        <div>
+            <label for="">Price : </label>
+            <input type="number" name="" id="priceFeild">
+        </div>
+        <div>
+            <button class="send_button" id="sendBtn">Send</button>
+        </div>
+    </div>
+
+    <script>
+
+        const sendBtn = document.getElementById("sendBtn");
+        sendBtn.addEventListener('click',async()=>{
+            const img = document.getElementById("imageFeild")
+            const image = img.files[0]
+            const category = document.getElementById("categoryFeild").value
+            const name = document.getElementById("sareeName").value
+            const color = document.getElementById("sareeColor").value
+            const price = document.getElementById("priceFeild").value
+
+            const form = new FormData()
+
+            if(!image){
+                return alert("please select image ")
+            }
+
+            form.append("image",image)
+            form.append("category",category)
+            form.append("name",name)
+            form.append("color",color)
+            form.append("price",price)
+
+
+            const response = await fetch("https://sareesuploaderbackend.onrender.com/sarees",{
+                method : 'POST',
+                body : form
+            })
+
+            const result = await response.text()
+           return alert(result)
+
+        })
+
+    </script>
+</body>
+</html>
