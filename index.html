@@ -92,8 +92,15 @@
                 body : form
             })
 
-            const result = await response.json()
-           return alert(result)
+            const result = await response.json();
+
+            console.log(result);
+
+            if (!response.ok) {
+                return alert(result.message);
+            }
+
+            alert(result.message);
 
         })
 
